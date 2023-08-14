@@ -13,12 +13,6 @@ exports.transfer = catchAsync(async (req, res, next) => {
     receiverUserId,
   });
 
-  return res.status(200).json({
-    status: "success",
-    message: "Successful transfer",
-    transfer,
-  });
-
   if (senderUserId === receiverUserId) {
     return next(
       new AppError(
@@ -66,4 +60,10 @@ exports.transfer = catchAsync(async (req, res, next) => {
   await receiverUser.update({ amount: receiverUser.amount + amount });
 
   await senderUser.update({ amount: senderUser.amount - amount });
+});
+
+return res.status(200).json({
+  status: "success",
+  message: "Successful transfer",
+  transfer,
 });
